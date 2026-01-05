@@ -1,0 +1,71 @@
+
+> temp_app@0.0.0 lint
+> eslint .
+
+
+C:\Users\aa\Desktop\ai with @@@\src\components\layout\AuthGuard.tsx
+  1:17  error  'useEffect' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\aa\Desktop\ai with @@@\src\pages\admin\AdminDashboard.tsx
+  21:18  error  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\aa\Desktop\ai with @@@\src\pages\admin\AdminSettings.tsx
+  13:12  error  'loading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  25:18  error  'error' is defined but never used             @typescript-eslint/no-unused-vars
+  45:41  error  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  53:25  error  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  63:18  error  'error' is defined but never used             @typescript-eslint/no-unused-vars
+
+C:\Users\aa\Desktop\ai with @@@\src\pages\admin\CouponsManagement.tsx
+  25:18  error  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  41:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  60:18  error  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\aa\Desktop\ai with @@@\src\pages\admin\OrdersManagement.tsx
+  17:9   error    Error: Cannot access variable before it is declared
+
+`loadOrders` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Users\aa\Desktop\ai with @@@\src\pages\admin\OrdersManagement.tsx:17:9
+  15 |
+  16 |     useEffect(() => {
+> 17 |         loadOrders();
+     |         ^^^^^^^^^^ `loadOrders` accessed before it is declared
+  18 |     }, [filter]);
+  19 |
+  20 |     const loadOrders = async () => {
+
+C:\Users\aa\Desktop\ai with @@@\src\pages\admin\OrdersManagement.tsx:20:5
+  18 |     }, [filter]);
+  19 |
+> 20 |     const loadOrders = async () => {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 21 |
+     | ^
+> 22 |         try {
+     | ^
+> 23 |             const status = filter === 'all' ? undefined : filter;
+     | ^
+> 24 |             const data = await AdminService.getOrders(status);
+     | ^
+> 25 |             setOrders(data || []);
+     | ^
+> 26 |         } catch (error) {
+     | ^
+> 27 |             toast.error('Failed to load orders');
+     | ^
+> 28 |         }
+     | ^
+> 29 |     };
+     | ^^^^^^^ `loadOrders` is declared here
+  30 |
+  31 |     const handleStatusChange = async (orderId: string, status: 'approved' | 'rejected') => {
+  32 |         try {  react-hooks/immutability
+  18:8   warning  React Hook useEffect has a missing dependency: 'loadOrders'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react-hooks/exhaustive-deps
+  26:18  error    'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  36:18  error    'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  80:56  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-explicit-any
+  80:90  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-explicit-any
+
+✖ 16 problems (15 errors, 1 warning)
+
