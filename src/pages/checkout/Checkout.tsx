@@ -18,7 +18,7 @@ export default function Checkout() {
     // Billing cycle is less relevant now if plan has fixed price, but keeping for legacy url support
     const billingCycle = searchParams.get('cycle') || 'monthly';
 
-    const [plan, setPlan] = useState<any>(null); // Using any temporarily to bypass strict Type Plan issues if types.ts isn't updated
+    const [plan, setPlan] = useState<Plan | null>(null);
     const [loading, setLoading] = useState(true);
     const [couponCode, setCouponCode] = useState('');
     const [discount, setDiscount] = useState(0);
