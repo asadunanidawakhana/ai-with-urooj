@@ -5,7 +5,6 @@ import { Footer } from '../../components/layout/Footer';
 import { PlansService } from '../../services/plansService';
 import { OrderService } from '../../services/orderService';
 import { useAuthStore } from '../../stores/authStore';
-import type { Plan } from '../../types';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import toast from 'react-hot-toast';
@@ -18,7 +17,7 @@ export default function Checkout() {
     // Billing cycle is less relevant now if plan has fixed price, but keeping for legacy url support
     const billingCycle = searchParams.get('cycle') || 'monthly';
 
-    const [plan, setPlan] = useState<Plan | null>(null);
+    const [plan, setPlan] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [couponCode, setCouponCode] = useState('');
     const [discount, setDiscount] = useState(0);
