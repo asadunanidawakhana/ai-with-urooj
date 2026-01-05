@@ -3,8 +3,10 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 import { Button } from '../ui/Button';
-import { Menu, X, User, LogOut, Sparkles, ChevronRight } from 'lucide-react';
+import { Menu, X, User, LogOut, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+import logo from '../../assets/logo.png';
 
 export const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -47,12 +49,7 @@ export const Navbar = () => {
                 <div className="flex justify-between items-center">
                     {/* Logo */}
                     <Link to="/" className="text-2xl font-display font-bold text-slate-900 flex items-center gap-2 group">
-                        <div className="bg-gradient-to-br from-primary-600 to-secondary-600 text-white p-2 rounded-xl shadow-lg shadow-primary-500/20 group-hover:scale-105 transition-transform duration-300">
-                            <Sparkles size={20} className="text-white" />
-                        </div>
-                        <span className="tracking-tight">
-                            AI With <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-600">Urooj</span>
-                        </span>
+                        <img src={logo} alt="AI With Urooj" className="h-12 w-auto object-contain" />
                     </Link>
 
                     {/* Desktop Navigation */}

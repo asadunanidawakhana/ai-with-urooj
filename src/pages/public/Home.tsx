@@ -1,9 +1,30 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
-import { ArrowRight, Zap, Target, Shield, Cpu, MessageSquare, BarChart } from 'lucide-react';
+import { ArrowRight, Zap, Target, Shield, Cpu, MessageSquare, BarChart, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { PlansService } from '../../services/plansService';
+import type { Plan } from '../../types';
 
 const Home = () => {
+    const [plans, setPlans] = useState<Plan[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        loadPlans();
+    }, []);
+
+    const loadPlans = async () => {
+        try {
+            const data = await PlansService.getActivePlans();
+            setPlans(data);
+        } catch (error) {
+            console.error('Failed to load plans', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="flex flex-col min-h-screen">
             {/* Hero Section */}
@@ -33,11 +54,11 @@ const Home = () => {
                                         <ArrowRight className="ml-2 h-5 w-5" />
                                     </Button>
                                 </Link>
-                                <Link to="/pricing">
+                                <a href="#plans">
                                     <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg px-8 border-slate-300 text-slate-700 hover:border-primary-600 hover:text-primary-600">
                                         View Plans
                                     </Button>
-                                </Link>
+                                </a>
                             </div>
                         </motion.div>
 
@@ -76,6 +97,73 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Plans Section */}
+            <section id="plans" className="py-24 bg-gray-50 relative">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <h2 className="text-primary-600 font-semibold tracking-wide uppercase text-sm mb-3">Pricing</h2>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6">Choose Your Plan</h2>
+                        <p className="text-xl text-gray-500">Select the perfect plan for your needs. Upgrade anytime.</p>
+                    </div>
+
+                    {loading ? (
+                        <div className="flex justify-center p-12">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {plans.map((plan, index) => (
+                                <motion.div
+                                    key={plan.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.1 }}
+                                    className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col"
+                                >
+                                    <div className="h-48 overflow-hidden relative">
+                                        <img
+                                            src={plan.image_url || 'https://placehold.co/600x400/png'}
+                                            alt={plan.name}
+                                            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                                            <h3 className="text-2xl font-bold text-white mb-1">{plan.name}</h3>
+                                        </div>
+                                    </div>
+                                    <div className="p-8 flex-grow">
+                                        <p className="text-gray-500 mb-6 min-h-[48px]">{plan.description}</p>
+                                        <div className="flex items-baseline mb-8">
+                                            <span className="text-4xl font-extrabold text-gray-900">${plan.price}</span>
+                                            <span className="text-gray-500 ml-2">/{plan.interval}</span>
+                                        </div>
+                                        <ul className="space-y-4 mb-8">
+                                            {plan.features?.map((feature: string, i: number) => (
+                                                <li key={i} className="flex items-start">
+                                                    <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                                                    <span className="text-gray-600">{feature}</span>
+                                                </li>
+                                            ))}
+                                            {(!plan.features || plan.features.length === 0) && (
+                                                <li className="text-gray-400 italic">No specific features listed.</li>
+                                            )}
+                                        </ul>
+                                    </div>
+                                    <div className="p-8 bg-gray-50 border-t border-gray-100 mt-auto">
+                                        <Link to={`/checkout/${plan.id}`}>
+                                            <Button className="w-full py-6 text-lg shadow-lg shadow-primary-500/20">
+                                                Get Started
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </section>
+
 
             {/* Features Section */}
             <section className="py-24 bg-white">
@@ -150,11 +238,11 @@ const Home = () => {
                 <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
                     <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Supercharge Your Workflow?</h2>
                     <p className="text-xl text-gray-400 mb-10">Join thousands of users who are saving time and money with AI With Urooj.</p>
-                    <Link to="/pricing">
+                    <a href="#plans">
                         <Button size="lg" className="text-lg px-10 py-4 bg-amber-500 hover:bg-amber-600 text-white border-none">
-                            View Pricing Plans
+                            Get A Plan Today
                         </Button>
-                    </Link>
+                    </a>
                 </div>
             </section>
         </div>
