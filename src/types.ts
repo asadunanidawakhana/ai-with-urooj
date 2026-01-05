@@ -25,6 +25,7 @@ export interface Plan {
     features: string[];
     is_active: boolean;
     is_popular?: boolean;
+    image_url?: string;
 }
 
 export interface Coupon {
